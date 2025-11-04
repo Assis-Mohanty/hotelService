@@ -1,16 +1,28 @@
-import {Model,InferAttributes,InferCreationAttributes, CreationOptional} from 'sequelize'
+import {Model,InferAttributes,InferCreationAttributes, CreationOptional, ENUM} from 'sequelize'
 import sequelize from './sequelize';
+
+
+enum roomType{
+    "STANDARD",
+    "DELUXE",
+    "SUITE",
+    "EXECUTIVE"
+}
+
 
 
 class Hotel extends Model<InferAttributes<Hotel>,InferCreationAttributes<Hotel>>{
     declare id :CreationOptional<number>;
     declare name:string;
     declare address:string
+    declare roomId:number
+    declare roomType:roomType
     declare location:string;
     declare createdAt:CreationOptional<Date>;
     declare updatedAt:CreationOptional<Date>;
     declare rating?:number;
     declare ratingCount?:number;
+    declare deletedAt:CreationOptional<Date|null>;
 }
 
 Hotel.init({
@@ -39,12 +51,26 @@ Hotel.init({
         type:"DATE",
         defaultValue:new Date()
     },
+    roomId:{
+        type:"INTEGER",
+        allowNull:true,
+        defaultValue:null
+    },
+    roomType:{
+        type:"ENUM",
+        allowNull:false,
+        defaultValue:"STANDARD"
+    },
     rating:{
         type:"FLOAT",
         defaultValue:null
     },
     ratingCount:{
         type:"INTEGER",
+        defaultValue:null
+    },
+    deletedAt:{
+        type:"DATE",
         defaultValue:null
     }
 
@@ -53,7 +79,8 @@ Hotel.init({
     tableName:"hotels",
     sequelize:sequelize,
     underscored:true,
-    timestamps:true
+    timestamps:true,
+    paranoid:true,
 })
 
 
