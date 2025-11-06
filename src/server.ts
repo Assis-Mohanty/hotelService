@@ -5,6 +5,7 @@ import v2Router from './routers/v2/index.router';
 import { appErrorHandler, genericErrorHandler } from './middlewares/error.middleware';
 import logger from './config/logger.config';
 import { attachCorrelationIdMiddleware } from './middlewares/correlation.middleware';
+import { setupAssociations } from './models/association.model';
 // import sequelize from './models/sequelize';
 // import Hotel from './models/hotel';
 const app = express();
@@ -49,5 +50,7 @@ app.listen(serverConfig.PORT, async () => {
     // } catch (error) {
     //     logger.error('something went wrong')
     // }
+    setupAssociations();
+    
 
 });

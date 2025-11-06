@@ -1,13 +1,6 @@
-import {Model,InferAttributes,InferCreationAttributes, CreationOptional, ENUM} from 'sequelize'
+import {Model,InferAttributes,InferCreationAttributes, CreationOptional, DataTypes } from 'sequelize'
 import sequelize from './sequelize';
 
-
-enum roomType{
-    "STANDARD",
-    "DELUXE",
-    "SUITE",
-    "EXECUTIVE"
-}
 
 
 
@@ -15,62 +8,57 @@ class Hotel extends Model<InferAttributes<Hotel>,InferCreationAttributes<Hotel>>
     declare id :CreationOptional<number>;
     declare name:string;
     declare address:string
-    declare roomId:number
-    declare roomType:roomType
     declare location:string;
     declare createdAt:CreationOptional<Date>;
     declare updatedAt:CreationOptional<Date>;
     declare rating?:number;
     declare ratingCount?:number;
     declare deletedAt:CreationOptional<Date|null>;
+    static associate(models: { Room: typeof import('./room').default }) {
+    this.hasMany(models.Room, {
+        foreignKey: 'hotel_id',
+        onDelete: 'CASCADE',
+    });
+    }
+
 }
 
 Hotel.init({
     id:{
-        type:"INTEGER",
+        type:DataTypes.INTEGER,
         autoIncrement:true,
         primaryKey:true
     },
     name:{
-        type:"STRING",
+        type:DataTypes.STRING,
         allowNull:false
     },
     address:{
-        type:"STRING",
+        type:DataTypes.STRING,
         allowNull:false
     },
     location:{
-        type:"STRING",
+        type:DataTypes.STRING,
         allowNull:false
     },
     createdAt:{
-        type:"DATE",
+        type:DataTypes.DATE,
         defaultValue: new Date()
     },
     updatedAt:{
-        type:"DATE",
+        type:DataTypes.DATE,
         defaultValue:new Date()
     },
-    roomId:{
-        type:"INTEGER",
-        allowNull:true,
-        defaultValue:null
-    },
-    roomType:{
-        type:"ENUM",
-        allowNull:false,
-        defaultValue:"STANDARD"
-    },
     rating:{
-        type:"FLOAT",
+        type:DataTypes.FLOAT,
         defaultValue:null
     },
     ratingCount:{
-        type:"INTEGER",
+        type:DataTypes.INTEGER,
         defaultValue:null
     },
     deletedAt:{
-        type:"DATE",
+        type:DataTypes.DATE,
         defaultValue:null
     }
 
@@ -82,6 +70,7 @@ Hotel.init({
     timestamps:true,
     paranoid:true,
 })
+
 
 
 export default Hotel

@@ -1,6 +1,6 @@
 import logger from "../config/logger.config";
 import { createHotelDTO, updateHotelDTO } from "../dto/hotel.dto";
-import Hotel from "../models/hotel";
+import { Hotel } from "../models/association.model";
 import { NotFoundError } from "../utils/errors/app.error";
 
 export async function createHotel(hotelData:createHotelDTO) {
@@ -30,7 +30,7 @@ export async function getAllHotels() {
             deletedAt:null
         }
     });
-    if(!hotels){
+    if(hotels.length===0){
         throw new NotFoundError(`Hotels not found`);
     }
     logger.info(`Number of Hotels found : ${hotels.length}`)
