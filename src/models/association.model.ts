@@ -1,17 +1,17 @@
 import Hotel from './hotel';
-import Room from './room';
+import RoomCategory from './roomCategory';
 
 export function setupAssociations() {
-  Hotel.hasMany(Room, {
+  Hotel.hasMany(RoomCategory, {
   foreignKey: 'hotel_id',
   onDelete: 'CASCADE'
 });
 
-Room.belongsTo(Hotel, {
+RoomCategory.belongsTo(Hotel, {
   foreignKey: 'hotel_id',
   onDelete: 'CASCADE'
 });
 
 }
 
-export { Hotel, Room };
+export { Hotel, RoomCategory };

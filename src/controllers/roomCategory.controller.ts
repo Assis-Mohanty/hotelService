@@ -1,48 +1,48 @@
 import { NextFunction, Request, Response } from "express";
-import { createRoomService, deleteRoomService, getRoomService, updateRoomService } from "../services/room.service";
+import { createRoomService, deleteRoomService, getRoomService, updateRoomService } from "../services/roomCategory.service";
 import { InternalServerError } from "../utils/errors/app.error";
 
 export async function createRoomHandler(req:Request,res:Response,next:NextFunction) {
-    const room=await createRoomService(req.body);
-    if(!room){
+    const roomRoomCategory=await createRoomService(req.body);
+    if(!roomRoomCategory){
         throw new InternalServerError("Something went wrong cannot create room ")   
     }
     res.status(200).json({
         message:"success",
-        data:room,
+        data:roomRoomCategory,
     })
 }
 
 export async function getRoomHandler(req:Request,res:Response,next:NextFunction) {
-    const room=await getRoomService(Number(req.params.id));
-    if(!room){
+    const roomRoomCategory=await getRoomService(Number(req.params.id));
+    if(!roomRoomCategory){
         throw new InternalServerError("Something went wrong cannot get room")   
     }
     res.status(200).json({
         message:true,
-        data:room
+        data:roomRoomCategory
     })
 
 }
 export async function updateRoomHandler(req:Request,res:Response,next:NextFunction) {
-    const room=await updateRoomService(Number(req.params.id),req.body);
-    if(!room){
+    const roomRoomCategory=await updateRoomService(Number(req.params.id),req.body);
+    if(!roomRoomCategory){
         throw new InternalServerError("Something went wrong cannot update room")   
     }
     res.status(200).json({
         message:true,
-        data:room
+        data:roomRoomCategory
     })
 
 }
 export async function deleteRoomHandler(req:Request,res:Response,next:NextFunction) {
-    const room=await deleteRoomService(Number(req.params.id));
-    if(!room){
+    const roomRoomCategory =await deleteRoomService({id:Number(req.params.id)});
+    if(!roomRoomCategory){
         throw new InternalServerError("Something went wrong cannot delete room")   
     }
     res.status(200).json({
         message:true,
-        data:room
+        data:roomRoomCategory
     })
-
+    
 }

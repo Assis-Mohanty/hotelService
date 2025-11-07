@@ -1,4 +1,4 @@
-import { RoomType } from "../models/room"
+import { RoomCategoryType } from "../models/roomCategory"
 
 export type createHotelDTO={
     name:string,
@@ -7,7 +7,7 @@ export type createHotelDTO={
     rating?:number,
     ratingCount?:number,
     roomId?:number,
-    roomType?:RoomType
+    roomType?:RoomCategoryType
 }
 
 export type updateHotelDTO={

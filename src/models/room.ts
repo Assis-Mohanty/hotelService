@@ -1,79 +1,62 @@
-import { Model,InferAttributes,InferCreationAttributes,CreationOptional, DataTypes } from "sequelize";
+import { Model, InferCreationAttributes, CreationOptional , InferAttributes, DataTypes } from "sequelize";
 import sequelize from "./sequelize";
 
 
-export enum RoomType{
-  STANDARD="STANDARD",
-  DELUXE="DELUXE",
-  LUXE="LUXE"
-}
+class Room extends Model <InferAttributes<Room>,InferCreationAttributes<Room>> {
 
-class Room extends Model<InferAttributes<Room>,InferCreationAttributes<Room>>{
-  declare id: CreationOptional<number>;
-  declare roomNumber:number
-  declare roomType:RoomType
-  declare hotelId:number
+  declare id:CreationOptional<number>
+  declare hotelId : number
+  declare roomCategoryId: number
+  declare dateOfAvaliability: Date
   declare price:number
   declare createdAt:CreationOptional<Date>
-  declare updatedAt:CreationOptional<Date>
-  static associate(models: { Hotel: typeof import('./hotel').default }) {
-  this.belongsTo(models.Hotel, {
-    foreignKey: 'hotel_id',
-    onDelete: 'CASCADE',
-  });}
+  declare updateAt:CreationOptional<Date>
+  declare deletedAt:CreationOptional<Date>
+  declare bookingId?:number | null
 
 }
 
 Room.init({
-
   id:{
-    type:"INTEGER",
+    type:DataTypes.INTEGER,
     autoIncrement:true,
     primaryKey:true,
     allowNull:false
   },
-  roomNumber:{
-    type:"INTEGER",
-    allowNull:false,
-  },
-  roomType:{
-    type:DataTypes.ENUM(...Object.values(RoomType)),
-    allowNull:false,
-    defaultValue:RoomType.STANDARD
-  },
   hotelId:{
-    type:"INTEGER",
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
+  roomCategoryId:{
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
+  dateOfAvaliability:{
+    type:DataTypes.DATE,
     allowNull:false,
-    references:{
-      model:'hotels',
-      key:'id'
-    }
   },
   price:{
-    type:"INTEGER",
-    allowNull:false,
+    type:DataTypes.FLOAT,
+    allowNull:false
   },
   createdAt:{
     type:DataTypes.DATE,
-    defaultValue:DataTypes.NOW,
-    allowNull:false
+    allowNull:false,
+    defaultValue:DataTypes.NOW
   },
-  updatedAt:{
+  updateAt:{
     type:DataTypes.DATE,
-    allowNull:true
+    allowNull:true,
+  },
+  deletedAt:{
+    type:DataTypes.DATE,
+    allowNull:true,
   }
-  
 },{
   tableName:'rooms',
   sequelize:sequelize,
-  underscored:true,
-  timestamps:true,
-  indexes: [{
-  unique: true,
-  fields: ['hotel_id', 'room_number']
-  }]
+  paranoid:true,
+  underscored:true
 })
-
-
 
 export default Room

@@ -1,7 +1,7 @@
 import express from 'express'
 import { validateRequestBody } from '../../validators';
 import { roomValidator } from '../../validators/room.validator';
-import { createRoomHandler, deleteRoomHandler, getRoomHandler, updateRoomHandler } from '../../controllers/room.controller';
+import { createRoomHandler, deleteRoomHandler, getRoomHandler, updateRoomHandler } from '../../controllers/roomCategory.controller';
 
 const roomRouter= express.Router();
 

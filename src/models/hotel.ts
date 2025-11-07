@@ -14,7 +14,7 @@ class Hotel extends Model<InferAttributes<Hotel>,InferCreationAttributes<Hotel>>
     declare rating?:number;
     declare ratingCount?:number;
     declare deletedAt:CreationOptional<Date|null>;
-    static associate(models: { Room: typeof import('./room').default }) {
+    static associate(models: { Room: typeof import('./roomCategory').default }) {
     this.hasMany(models.Room, {
         foreignKey: 'hotel_id',
         onDelete: 'CASCADE',
