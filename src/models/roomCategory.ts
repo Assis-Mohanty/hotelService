@@ -16,12 +16,6 @@ class RoomCategory extends Model<InferAttributes<RoomCategory>,InferCreationAttr
   declare createdAt:CreationOptional<Date>
   declare updatedAt:CreationOptional<Date>
   declare roomCount: number
-  static associate(models: { Hotel: typeof import('./hotel').default }) {
-  this.belongsTo(models.Hotel, {
-    foreignKey: 'hotel_id',
-    onDelete: 'CASCADE',
-  });}
-
 }
 
 RoomCategory.init({
@@ -65,14 +59,15 @@ RoomCategory.init({
   }
   
 },{
-  tableName:'rooms',
+  tableName:'room_category',
   sequelize:sequelize,
   underscored:true,
   timestamps:true,
   indexes: [{
   unique: true,
-  fields: ['hotel_id', 'room_number']
-  }]
+  fields: ['hotel_id', 'room_type']
+}]
+
 })
 
 

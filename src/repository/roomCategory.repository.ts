@@ -35,7 +35,7 @@ import BaseRepository from "./baseRepository";
 // }
 
 
-export default class RoomRepository extends BaseRepository<RoomCategory>{
+export default class RoomCategoryRepository extends BaseRepository<RoomCategory>{
     constructor(){
         super(RoomCategory);
     }

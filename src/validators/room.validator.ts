@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-export const roomValidator = z.object({
-  roomNumber: z.number(),
+export const roomCategoryValidator = z.object({
+  roomType: z.enum(["STANDARD", "DELUXE", "LUXE"]),
   hotelId: z.number(),
   price: z.number(),
-  roomType: z.enum(["STANDARD", "DELUXE", "LUXE"]),
+  roomCount: z.number(),
 });

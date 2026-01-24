@@ -1,5 +1,7 @@
 import { Model, InferCreationAttributes, CreationOptional , InferAttributes, DataTypes } from "sequelize";
 import sequelize from "./sequelize";
+import RoomCategory from "./roomCategory";
+import { BadRequestError } from "../utils/errors/app.error";
 
 
 class Room extends Model <InferAttributes<Room>,InferCreationAttributes<Room>> {
@@ -7,14 +9,14 @@ class Room extends Model <InferAttributes<Room>,InferCreationAttributes<Room>> {
   declare id:CreationOptional<number>
   declare hotelId : number
   declare roomCategoryId: number
-  declare dateOfAvaliability: Date
-  declare price:number
+  declare dateOfAvaliability: string
+  declare price?:number|null
   declare createdAt:CreationOptional<Date>
-  declare updateAt:CreationOptional<Date>
+  declare updatedAt:CreationOptional<Date>
   declare deletedAt:CreationOptional<Date>
   declare bookingId?:number | null
-
 }
+
 
 Room.init({
   id:{
@@ -32,19 +34,19 @@ Room.init({
     allowNull:false
   },
   dateOfAvaliability:{
-    type:DataTypes.DATE,
+    type:DataTypes.DATEONLY,
     allowNull:false,
   },
   price:{
-    type:DataTypes.FLOAT,
-    allowNull:false
+    type:DataTypes.INTEGER,
+    allowNull:true
   },
   createdAt:{
     type:DataTypes.DATE,
     allowNull:false,
     defaultValue:DataTypes.NOW
   },
-  updateAt:{
+  updatedAt:{
     type:DataTypes.DATE,
     allowNull:true,
   },
@@ -57,6 +59,15 @@ Room.init({
   sequelize:sequelize,
   paranoid:true,
   underscored:true
+})
+Room.beforeCreate(async(room)=>{
+  if(room.price==null){
+    const roomCategory = await RoomCategory.findByPk(room.roomCategoryId)
+    if(!roomCategory){
+      throw new BadRequestError("Invalid request body")
+    }
+    room.price=roomCategory.price
+  }
 })
 
 export default Room

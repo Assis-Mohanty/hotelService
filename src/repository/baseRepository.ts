@@ -41,8 +41,6 @@ class BaseRepository<T extends Model>{
         await record.save();
         return record
     }
-
-
     async create(data:CreationAttributes<T>):Promise<T | null>{
         const record = await this.model.create(data);
         return record

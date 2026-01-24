@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bullmq": "^5.67.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "uuid": "^11.1.0",

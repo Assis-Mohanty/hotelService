@@ -1,13 +1,17 @@
-import express from 'express'
-import { validateRequestBody } from '../../validators';
-import { roomValidator } from '../../validators/room.validator';
-import { createRoomHandler, deleteRoomHandler, getRoomHandler, updateRoomHandler } from '../../controllers/roomCategory.controller';
+import express from "express"
+import { createRoomBulk, createRoomHandler, deleteRoomHandler, findAllHandler, findByRoomCategoryAndDateHandler, findByRoomCategoryAndDateInRangeOfDatesHandler, GenerateRoomHandler, generateRoomJobHandler, getRoomHandler, updateRoomHandler } from "../../controllers/room.controller"
 
-const roomRouter= express.Router();
+export const roomRouter = express.Router()
 
-roomRouter.post('/',validateRequestBody(roomValidator),createRoomHandler)
 roomRouter.get('/:id',getRoomHandler)
-roomRouter.put('/:id',updateRoomHandler)
+roomRouter.get('/',findAllHandler)
+roomRouter.post('/',createRoomHandler)
 roomRouter.delete('/:id',deleteRoomHandler)
+roomRouter.patch('/:id',updateRoomHandler)
+roomRouter.post('/bulk',createRoomBulk)
+roomRouter.post('/generate',generateRoomJobHandler)
+roomRouter.post('/find',GenerateRoomHandler)
+roomRouter.get('/category/:id/date',findByRoomCategoryAndDateHandler)
+roomRouter.get('/category/:id/range',findByRoomCategoryAndDateInRangeOfDatesHandler)
 
-export default roomRouter
+
