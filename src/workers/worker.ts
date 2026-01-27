@@ -4,7 +4,7 @@ import { RoomGenerationJobDTO } from "../dto/roomGeneration.dto";
 import { queueName, redisConnection } from "../producer/queue";
 
 
-export const roomWorker  = new Worker(queueName,
+export const roomWorker=() => new Worker(queueName,
     async(job:Job<RoomGenerationJobDTO>)=>{
         // console.log("JOB PICKED:",job.id,job.name)
         const result = await generateRooms(job.data)

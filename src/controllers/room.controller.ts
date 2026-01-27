@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import RoomService from "../services/room.services";
+import RoomService, { ScheduleRoomsAndToQueue } from "../services/room.services";
 import { InternalServerError } from "../utils/errors/app.error";
 import { generateRooms } from "../services/generateRoom.service";
 import { RoomGenerationJobDTO, RoomGenerationJobSchema } from "../dto/roomGeneration.dto";
@@ -139,6 +139,16 @@ export async function updateRoomHandler(req :Request,res:Response,next:NextFunct
         data: result,
     });
 }
+
+export async function ScheduleRoomsAndToQueueHandler(req :Request,res:Response,next:NextFunction) { 
+    await ScheduleRoomsAndToQueue();
+    res.status(200).json({
+        message:"Room created",
+        error: null
+    })
+}
+
+
 
 
 

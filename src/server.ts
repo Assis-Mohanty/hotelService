@@ -6,6 +6,7 @@ import { appErrorHandler, genericErrorHandler } from './middlewares/error.middle
 import logger from './config/logger.config';
 import { attachCorrelationIdMiddleware } from './middlewares/correlation.middleware';
 import { setupAssociations } from './models/association.model';
+// import { roomWorker } from './workers/worker';
 import { roomWorker } from './workers/worker';
 // import sequelize from './models/sequelize';
 // import Hotel from './models/hotel';
@@ -52,5 +53,5 @@ app.listen(serverConfig.PORT, async () => {
     //     logger.error('something went wrong')
     // }
     setupAssociations();
-    roomWorker;
+    roomWorker()   
 });

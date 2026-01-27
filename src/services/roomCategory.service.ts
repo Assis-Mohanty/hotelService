@@ -1,8 +1,7 @@
 import { WhereOptions } from "sequelize";
 import { CreateRoomCategoryDTO } from "../dto/roomCategory.dto";
-// import { createRoomRepository, deleteRoomRepository, getRoomRepository , updateRoomRepository } from "../repository/roomCategory.repository";
-
 import RoomCategoryRepository from "../repository/roomCategory.repository";
+
 const roomCategoryRepository = new RoomCategoryRepository();
 export async function createCategoryRoomService(createRoomCategoryDTO:CreateRoomCategoryDTO ) {
     const roomRoomCategory = await roomCategoryRepository.create(createRoomCategoryDTO);
@@ -12,6 +11,10 @@ export async function createCategoryRoomService(createRoomCategoryDTO:CreateRoom
 export async function getRoomCategoryService(id:number) {
     const roomRoomCategory = await roomCategoryRepository.findById(id);
     return roomRoomCategory
+}
+export async function getallRoomCategoryService() {
+    const roomCategories = await roomCategoryRepository.findAll();
+    return roomCategories
 }
 
 export async function updateRoomCategoryService(id:number,updateRoomDTO:CreateRoomCategoryDTO) {
@@ -24,3 +27,4 @@ export async function deleteRoomCategoryService(id:WhereOptions) {
     return count
 
 }
+

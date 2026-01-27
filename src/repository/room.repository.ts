@@ -48,4 +48,8 @@ export default class RoomRepository extends BaseRepository<Room>{
         const createdRooms = await this.model.bulkCreate(result);
         return createdRooms;
     }
+    async getRoomCreationLastDate(): Promise<string | null> {
+    return await this.model.max("dateOfAvaliability");
+}
+
 }

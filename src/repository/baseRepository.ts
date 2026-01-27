@@ -16,7 +16,7 @@ class BaseRepository<T extends Model>{
     }
 
     async findAll(): Promise<T[]> {
-        const records = await this.model.findAll({});
+        const records = await this.model.findAll();
         if (!records) {
             return [];
         }
