@@ -41,6 +41,9 @@ export default class RoomService extends BaseService<Room> {
   async createRoomsBulkService(data: Room[]) {
     return await this.roomRepository.bulkCreate(data);
   }
+  async updateBookingIdService(bookingId:number,roomIds:number[]){
+    return await this.roomRepository.updateBookingId(bookingId,roomIds)
+  }
 }
 
 // export async function createRoomForAllRoomCategoryForNextDate() {

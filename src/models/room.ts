@@ -41,6 +41,10 @@ Room.init({
     type:DataTypes.INTEGER,
     allowNull:true
   },
+  bookingId:{
+    type:DataTypes.INTEGER,
+    allowNull:true
+  },
   createdAt:{
     type:DataTypes.DATE,
     allowNull:false,

@@ -4,6 +4,7 @@ import BaseRepository from "./baseRepository";
 import { BadRequestError, NotFoundError } from "../utils/errors/app.error";
 import { getRoomCategoryService } from "../services/roomCategory.service";
 
+
 export default class RoomRepository extends BaseRepository<Room>{
     constructor(){
         super(Room)
@@ -51,5 +52,16 @@ export default class RoomRepository extends BaseRepository<Room>{
     async getRoomCreationLastDate(): Promise<string | null> {
     return await this.model.max("dateOfAvaliability");
 }
+    async updateBookingId(bookingId:number,roomIds:number[]){
+        return await this.model.update({
+            bookingId:bookingId
+        },{
+            where: {
+                id: {
+                    [Op.in]: roomIds
+                }
+                }
+        })
+    }
 
 }

@@ -75,7 +75,7 @@ export async function findByRoomCategoryAndDateHandler(req:Request,res:Response,
 
 
 export async function findByRoomCategoryAndDateInRangeOfDatesHandler(req:Request,res:Response,next:NextFunction){
-    const roomCategoryId = Number(req.params.id) 
+    const roomCategoryId = Number(req.params.id)
     const startDatestring = req.query.startDate as string
     const endDatestring = req.query.endDate as string
     const startDate = new Date(startDatestring)
@@ -83,7 +83,6 @@ export async function findByRoomCategoryAndDateInRangeOfDatesHandler(req:Request
 
 
     const result = await roomService.findByRoomCategoryAndDateInRangeOfDatesService(roomCategoryId,startDate,endDate);
-
     res.status(200).json({
         message: "Rooms fetched  successfully",
         data: result,
@@ -147,6 +146,16 @@ export async function ScheduleRoomsAndToQueueHandler(req :Request,res:Response,n
         error: null
     })
 }
+export async function updateBookingIdHandler(req :Request,res:Response,next:NextFunction) {
+    const bookingId = Number(req.params.id)
+    const {roomIds} = req.body
+    const result =await roomService.updateBookingIdService(bookingId,roomIds)
+    res.status(200).json({
+        message:"Booking id updated to Rooms",
+        data:result
+    })
+}
+
 
 
 
